@@ -1,0 +1,27 @@
+body {
+    background: #C3E1FF;
+}
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#form {
+    padding-top: 50px;
+    background: white;
+    border-radius: 10px;
+}
+
+#header {
+    background: white;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: auto;
+    padding-right: auto;
+    font-size: 24px;
+    text-align: center;
+    border-radius: 10px;
+}
+
