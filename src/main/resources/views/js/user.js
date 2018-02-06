@@ -4,39 +4,41 @@ $(document).ready(function () {
 
     function getAllAtTheWeek() {
         $.ajax({
-            url: API_URL + "training/week"
+            url: API_URL + "training/user"
         }).done(function(object) {
             console.log(object);
             show(object);
             header(object);
+            
         })
     }
-
-    // function draw(object) {
-    //     var content = $('#content');
-    // }
 
     function show(object) {
         var content = $('tbody');
         console.log(content);
         object.trainings.forEach(function (training, i) {
             i++;
-            var tr = $('<tr>' +
+            var tr = $('<tr data-id="'+ training.id +'">' +
                 '<th>'+ i +'</th>' +
                 '<td>'+ training.name + '</td>'+
                 '<td>'+ getDate(training.date) +'</td>' +
                 '<td>'+ getTime(training.time)+'</td>' +
                 '<td>'+ getTime(training.duration) +'</td>'+
                 '<td>'+ training.capacity +'</td>'+
-                '<td>'+ training.users.length +'</td>'+
-                '<td><a href="/edit.html?id='+ training.id +'">Edit</a></td>'+
+                '<td>'+ training.vacancies +'</td>'+
+                '<td>'+ getSign(training.sign) +'</td>'+
                 '</th>');
-            // div.css("padding", "10px")
-            //     .css("background", "white")
-            //     .css("borderRadius", "10px")
-            //     .css("margin", "10px");
             content.append(tr);
+
         })
+    }
+
+    function getSign(sign) {
+        console.log(sign);
+        if(sign === true) {
+            return '<a href="" data-sign="t" class="sign">Sign off</a>';
+        }
+        return '<a href="" data-sign="f" class="sign">Sign in</a>';
     }
 
     function getDate(date) {

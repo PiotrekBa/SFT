@@ -1,4 +1,4 @@
-var API_URL = "http://localhost:8080";
+var API_URL = "http://localhost:8080/login/check";
 
 $(document).ready(function () {
     var button = $('button');
@@ -12,7 +12,7 @@ $(document).ready(function () {
         var objToSave = {
             email: email,
             password: password
-        }
+        };
 
         var myHeaders = new Headers({
             'Content-Type': 'application/json'
@@ -23,11 +23,12 @@ $(document).ready(function () {
             headers: myHeaders,
             cache: 'default',
             body: JSON.stringify(objToSave)
-        }
+        };
 
         console.log(objToSave);
+        console.log(JSON.stringify(objToSave));
 
-        fetch(API_URL+"/checkLogin", myInit).then(function (value) {
+        fetch(API_URL , myInit).then(function (value) {
             console.log(value);
         })
     })

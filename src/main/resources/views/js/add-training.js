@@ -2,10 +2,6 @@ var API_URL = 'http://localhost:8080/training';
 
 $(document).ready(function(){
 
-    $.ajax({
-        url: API_URL
-    }).done(function () {
-    })
 
     var button = $('button');
 
@@ -14,8 +10,8 @@ $(document).ready(function(){
 
         var trainingName = $('#name').val();
         var date = $('#date').val();
-        var time = $('#time').val()+":00";
-        var duration = $('#duration').val()+":00";
+        var time = $('#time').val()+':00';
+        var duration = $('#duration').val()+':00';
         var capacity = $('#capacity').val();
 
 
@@ -27,6 +23,8 @@ $(document).ready(function(){
             capacity: capacity,
             visibility: true
         }
+
+        console.log(JSON.stringify(objToSave))
 
         var myHeaders = new Headers({
             'Content-Type': 'application/json'

@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TrainingRepository extends JpaRepository<Training, Long> {
 
-    @Query("select t from Training t where t.date between ?1 AND ?2 order by t.date asc")
+    @Query("select t from Training t where t.date between ?1 AND ?2 order by t.date, t.time asc")
     List<Training> findTrainingsAtTheWeek(LocalDate startDate, LocalDate finishDate);
 
 }

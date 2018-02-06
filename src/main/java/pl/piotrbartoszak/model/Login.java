@@ -9,6 +9,9 @@ public class Login {
         this.password = password;
     }
 
+    public Login() {
+    }
+
     public String getEmail() {
         return email;
     }

@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/home")
 public class HomeController {
 
     @GetMapping("")
@@ -22,6 +22,6 @@ public class HomeController {
 //        } else {
 //            response.sendRedirect("/user.html");
 //        }
-        response.sendRedirect("/admin.html");
+        response.sendRedirect("home/piotr/IdeaProjects/SFT/src/main/resources/views/admin.html");
     }
 }

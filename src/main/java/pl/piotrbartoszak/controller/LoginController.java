@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("/checkLogin")
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
@@ -22,12 +22,13 @@ public class LoginController {
     @Autowired
     UserRepository userRepository;
 
-    @PostMapping("")
+    @PostMapping("/check")
     public void checkLogin(@RequestBody Login login,
                            HttpSession session,
                            HttpServletResponse response
                           ) throws IOException {
         Admin admin = adminRepository.findByEmail(login.getEmail());
+        System.out.println(admin);
         if (admin != null) {
             if (admin.getPassword().equals(login.getPassword())){
                 session.setAttribute("user", admin);
@@ -40,7 +41,6 @@ public class LoginController {
                 }
             }
         }
-        response.sendRedirect("");
-
+        response.sendRedirect("/home");
     }
 }
