@@ -62,4 +62,25 @@ public class TrainingController {
         trainingToViewForUser.setTrainings(trainingForUsers);
         return trainingToViewForUser;
     }
+
+    @PutMapping("/user/{id}")
+    public void signToTraining(@PathVariable long id) {
+
+        User user = userRepository.findOne(1L);
+        Training training = trainingRepository.findOne(id);
+        List<User> users = training.getUsers();
+        User userToDel = null;
+        for(User u : users) {
+            if (u.getId() == user.getId()) {
+                userToDel = u;
+            }
+        }
+        if (userToDel == null) {
+            users.add(user);
+        } else {
+            users.remove(userToDel);
+        }
+        training.setUsers(users);
+        trainingRepository.save(training);
+    }
 }

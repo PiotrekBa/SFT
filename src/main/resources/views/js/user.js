@@ -6,16 +6,14 @@ $(document).ready(function () {
         $.ajax({
             url: API_URL + "training/user"
         }).done(function(object) {
-            console.log(object);
             show(object);
             header(object);
-            
+            signLink();
         })
     }
 
     function show(object) {
         var content = $('tbody');
-        console.log(content);
         object.trainings.forEach(function (training, i) {
             i++;
             var tr = $('<tr data-id="'+ training.id +'">' +
@@ -34,11 +32,10 @@ $(document).ready(function () {
     }
 
     function getSign(sign) {
-        console.log(sign);
         if(sign === true) {
-            return '<a href="" data-sign="t" class="sign">Sign off</a>';
+            return '<a href="" class="sign">Sign off</a>';
         }
-        return '<a href="" data-sign="f" class="sign">Sign in</a>';
+        return '<a href="" class="sign">Sign in</a>';
     }
 
     function getDate(date) {
@@ -62,6 +59,33 @@ $(document).ready(function () {
         header.text('The nearest trainings ('+
             getDate(object.startDate)+' - ' +
             getDate(object.finishDate) +')');
+    }
+
+    function signLink() {
+        var links = $('.sign');
+        links.on('click', function(e) {
+            e.preventDefault();
+            var id = $(e.target).parent().parent().data('id');
+
+            var myHeaders = new Headers({
+                'Content-Type': 'application/json'
+            });
+
+            var myInit = {
+                method: 'PUT',
+                headers: myHeaders,
+                cache: 'default'
+            };
+
+            fetch(API_URL + "training/user/"+ id, myInit).then(function (value) {
+                clearTable();
+                getAllAtTheWeek();
+            })
+        })
+    }
+
+    function clearTable() {
+        $('tbody').children().remove();
     }
 
     getAllAtTheWeek();
