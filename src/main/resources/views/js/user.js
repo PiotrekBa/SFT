@@ -7,6 +7,7 @@ $(document).ready(function () {
             url: API_URL + "training/user"
         }).done(function(object) {
             show(object);
+            console.log(object)
             header(object);
             signLink();
         })
@@ -65,8 +66,14 @@ $(document).ready(function () {
         var links = $('.sign');
         links.on('click', function(e) {
             e.preventDefault();
-            var id = $(e.target).parent().parent().data('id');
+            var aText = $(e.target).text();
+            var vac = $(e.target).parent().prev().text();
 
+            if(aText === 'Sign in' & vac ==='0') {
+                alert('No vacancies at this training');
+            }
+
+            var id = $(e.target).parent().parent().data('id');
             var myHeaders = new Headers({
                 'Content-Type': 'application/json'
             });

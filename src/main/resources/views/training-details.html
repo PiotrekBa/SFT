@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>SFT - Schedule For Trainer</title>
+</head>
+
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <img src="images/logo.png" id="logo"/>
+        </div>
+    </div>
+    <div class="row" id="links">
+        <div class="col">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark active" href="admin.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark" href="add-training.html">Add Training</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark" href="browse-users.html">Browse users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark" href="#">Log out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row" id="header">
+        <div class="col">
+            <span>Training details</span>
+        </div>
+
+    </div>
+    <table class="table table-light table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Capacity</th>
+            <th scope="col">Volunteers</th>
+        </tr>
+        </thead>
+        <tbody id="training-details">
+        </tbody>
+    </table>
+    <table class="table table-light table-bordered">
+        <thead>
+        <tr>
+            <th scope="col" colspan="6" style="text-align: center">
+                Volunteers list
+            </th>
+        </tr>
+        <tr>
+            <th scope="col">Place on list</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+        </tr>
+        </thead>
+        <tbody id="users">
+        </tbody>
+    </table>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="js/training-details.js"></script>
+</html>

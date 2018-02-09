@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.piotrbartoszak.entity.Training;
 import pl.piotrbartoszak.entity.User;
-import pl.piotrbartoszak.model.TrainingForUser;
-import pl.piotrbartoszak.model.TrainingToSave;
-import pl.piotrbartoszak.model.TrainingToView;
-import pl.piotrbartoszak.model.TrainingToViewForUser;
+import pl.piotrbartoszak.model.*;
 import pl.piotrbartoszak.repository.TrainingRepository;
 import pl.piotrbartoszak.repository.UserRepository;
 
@@ -25,10 +22,32 @@ public class TrainingController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("")
-    public List<Training> allTrainings() {
-        List<Training> trainings = trainingRepository.findAll();
-        return trainings;
+    @Autowired
+    PageParameter pageParameter;
+
+    @GetMapping("/{id}")
+    public Training trainingDetails(@PathVariable long id) {
+        Training training = trainingRepository.findOne(id);
+        return training;
+    }
+
+    @GetMapping("all/{page}")
+    public TrainingToView allTrainings(@PathVariable int page) {
+        int elementsOnPage = pageParameter.getElementsOnPage();
+        long counter = trainingRepository.count();
+        int amountOfPage = (int) (counter/elementsOnPage+1);
+        List<Training> trainings;
+        if (page > 0) {
+            trainings = trainingRepository
+                    .findTrainingsWithLimit(page*elementsOnPage-elementsOnPage,elementsOnPage);
+        } else {
+            trainings = trainingRepository
+                    .findTrainingsWithLimit(0,elementsOnPage);
+        }
+        TrainingToView ttv = TrainingToView.fromTrainingList(trainings, null, null);
+        ttv.setPages(amountOfPage);
+        ttv.setElementsOnPage(elementsOnPage);
+        return ttv;
     }
 
     @GetMapping("/week")
@@ -47,7 +66,7 @@ public class TrainingController {
 
     @GetMapping("/user")
     public TrainingToViewForUser allUserTraining() {
-        User user = userRepository.findOne(1L);
+        User user = userRepository.findOne(2L);
         LocalDate startDate = LocalDate.now();
         LocalDate finishDate = startDate.plusDays(7);
         List<Training> trainings = trainingRepository
@@ -64,9 +83,8 @@ public class TrainingController {
     }
 
     @PutMapping("/user/{id}")
-    public void signToTraining(@PathVariable long id) {
-
-        User user = userRepository.findOne(1L);
+    public String signToTraining(@PathVariable long id) {
+        User user = userRepository.findOne(2L);
         Training training = trainingRepository.findOne(id);
         List<User> users = training.getUsers();
         User userToDel = null;
@@ -75,12 +93,15 @@ public class TrainingController {
                 userToDel = u;
             }
         }
-        if (userToDel == null) {
+        if (userToDel != null) {
+            users.remove(userToDel);
+        } else if (users.size() < training.getCapacity()) {
             users.add(user);
         } else {
-            users.remove(userToDel);
+            return "No vacancies";
         }
         training.setUsers(users);
         trainingRepository.save(training);
+        return "";
     }
 }

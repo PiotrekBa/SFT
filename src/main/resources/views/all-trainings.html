@@ -26,13 +26,13 @@
                         <a class="nav-link btn btn-dark" href="admin.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-dark active" href="add-training.html">Add Training</a>
+                        <a class="nav-link btn btn-dark" href="add-training.html">Add Training</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-dark" href="browse-users.html">Browse users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link btn btn-dark" href="all-trainings.html">All Trainings</a>
+                        <a class="nav-link btn btn-dark active" href="all-trainings.html">All Trainings</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link btn btn-dark" href="#">Log out</a>
@@ -42,40 +42,34 @@
         </div>
         <div class="row" id="header">
             <div class="col">
-                <span>Add training</span>
+                <span>The nearest trainings</span>
             </div>
+
         </div>
-        <div class="row" id="content">
-            <div class="col"></div>
-            <div class="col-8" id="form">
-            <form >
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" id="name">
-                </div>
-                <div class="form-group">
-                    <label for="date">Date</label>
-                    <input type="date" class="form-control" id="date">
-                </div>
-                <div class="form-group">
-                    <label for="time">Time</label>
-                    <input type="time" class="form-control" id="time">
-                </div>
-                <div class="form-group">
-                    <label for="duration">Duration</label>
-                    <input type="time" class="form-control" id="duration">
-                </div>
-                <div class="form-group">
-                    <label for="capacity">Capacity</label>
-                    <input type="number" step="1" min="0" class="form-control" id="capacity">
-                </div>
-                <button type="submit" class="btn btn-dark">Save</button>
-            </form>
+        <table class="table table-light table-bordered">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Duration</th>
+                <th scope="col">Capacity</th>
+                <th scope="col">Volunteers</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="row" id="pages">
+            <div class="col">
+                <span></span>
             </div>
-            <div class="col"></div>
+
         </div>
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-<script src="js/add-training.js"></script>
+<script src="js/all-trainings.js"></script>
 </html>

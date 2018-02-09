@@ -15,7 +15,7 @@ body {
     padding-bottom: 20px;
 }
 
-#header {
+#header, #pages {
     background: white;
     margin-top: 30px;
     margin-bottom: 30px;

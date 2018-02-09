@@ -2,19 +2,20 @@ API_URL = "http://localhost:8080/";
 
 $(document).ready(function () {
 
-    function getAllAtTheWeek() {
+    function getAll(page) {
         $.ajax({
-            url: API_URL + "training/week"
+            url: API_URL + "training/all/"+page
         }).done(function(object) {
-            console.log(object);
-            show(object);
-            header(object);
+            $('tbody').children().remove();
+            show(object, page);
+            pages(object.pages);
+            linksToPages();
         })
     }
 
-    function show(object) {
+    function show(object, page) {
         var content = $('tbody');
-        console.log(content);
+        var elementOnPage = object.elementsOnPage;
         object.trainings.forEach(function (training, i) {
             i++;
             var tr = $('<tr>' +
@@ -47,12 +48,26 @@ $(document).ready(function () {
         return hour + " : " + minute;
     }
 
-    function header(object) {
-        var header = $('#header').children().children();
-        header.text('The nearest trainings ('+
-            getDate(object.startDate)+' - ' +
-            getDate(object.finishDate) +')');
+    function pages(amountOfPages) {
+        var pagesLinks = $('#pages').children().children();
+        if (pagesLinks.children().length > 0) {
+            pagesLinks.children().remove();
+        }
+        for(var i = 1; i <= amountOfPages; i++) {
+            pagesLinks.append('<a href ="" class="pagesLink">'+i+'</a>  ');
+        }
     }
 
-    getAllAtTheWeek();
+    function linksToPages() {
+        var pagesLinks = $('.pagesLink');
+
+        pagesLinks.on('click', function (e) {
+            e.preventDefault();
+            var page = $(e.target).text();
+            getAll(page);
+        })
+    }
+
+
+    getAll(0);
 })
