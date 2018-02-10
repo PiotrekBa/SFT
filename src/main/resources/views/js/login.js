@@ -25,9 +25,6 @@ $(document).ready(function () {
             body: JSON.stringify(objToSave)
         };
 
-        console.log(objToSave);
-        console.log(JSON.stringify(objToSave));
-
         fetch(API_URL , myInit).then(function (value) {
             console.log(value);
         })

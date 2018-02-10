@@ -40,20 +40,20 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         return tm;
     }
 
-//    @Bean
-//    public MultipartResolver multipartResolver() {
-//        return new StandardServletMultipartResolver();
-//    }
-//
-//    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-//            "classpath:/views/"};
-//
-//
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/**").addResourceLocations(
-//                CLASSPATH_RESOURCE_LOCATIONS);
-//    }
+    @Bean
+    public MultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
+
+    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+            "classpath:/views/"};
+
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/**").addResourceLocations(
+                CLASSPATH_RESOURCE_LOCATIONS);
+    }
 
 
 }

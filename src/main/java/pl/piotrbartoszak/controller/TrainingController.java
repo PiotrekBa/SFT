@@ -36,14 +36,8 @@ public class TrainingController {
         int elementsOnPage = pageParameter.getElementsOnPage();
         long counter = trainingRepository.count();
         int amountOfPage = (int) (counter/elementsOnPage+1);
-        List<Training> trainings;
-        if (page > 0) {
-            trainings = trainingRepository
-                    .findTrainingsWithLimit(page*elementsOnPage-elementsOnPage,elementsOnPage);
-        } else {
-            trainings = trainingRepository
-                    .findTrainingsWithLimit(0,elementsOnPage);
-        }
+        List<Training> trainings = trainingRepository
+                    .findTrainingsWithLimit(elementsOnPage*(page-1),elementsOnPage);
         TrainingToView ttv = TrainingToView.fromTrainingList(trainings, null, null);
         ttv.setPages(amountOfPage);
         ttv.setElementsOnPage(elementsOnPage);

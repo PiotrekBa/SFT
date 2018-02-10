@@ -17,9 +17,9 @@ $(document).ready(function () {
         var content = $('tbody');
         var elementOnPage = object.elementsOnPage;
         object.trainings.forEach(function (training, i) {
-            i++;
+            var counter = elementOnPage*(page-1)+i+1;
             var tr = $('<tr>' +
-                '<th>'+ i +'</th>' +
+                '<th>'+ counter +'</th>' +
                 '<td>'+ training.name + '</td>'+
                 '<td>'+ getDate(training.date) +'</td>' +
                 '<td>'+ getTime(training.time)+'</td>' +
@@ -69,5 +69,5 @@ $(document).ready(function () {
     }
 
 
-    getAll(0);
+    getAll(1);
 })
