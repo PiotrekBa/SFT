@@ -54,6 +54,4 @@ public class AppConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/**").addResourceLocations(
                 CLASSPATH_RESOURCE_LOCATIONS);
     }
-
-
 }

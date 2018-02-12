@@ -25,8 +25,8 @@ $(document).ready(function () {
             body: JSON.stringify(objToSave)
         };
 
-        fetch(API_URL , myInit).then(function (value) {
-            console.log(value);
+        fetch(API_URL , myInit).then(function (response) {
+            window.location.replace(response.url);
         })
     })
 })

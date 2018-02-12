@@ -27,8 +27,7 @@ public class LoginController {
     @PostMapping("/check")
     public void checkLogin(@RequestBody Login login,
                            HttpServletResponse response,
-                           HttpSession session
-                          ) throws IOException {
+                           HttpSession session) throws IOException {
         Admin admin = adminRepository.findByEmail(login.getEmail());
         if (admin != null) {
             if (admin.getPassword().equals(login.getPassword())){
@@ -42,7 +41,8 @@ public class LoginController {
                 }
             }
         }
-        System.out.println(session.getId());
+        session.setMaxInactiveInterval(3600);
+        System.out.println(session.getAttribute("user"));
         response.sendRedirect("/home");
     }
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+          integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>SFT - Schedule For Trainer</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <img src="images/logo.png" id="logo"/>
+            </div>
+        </div>
+        <div class="row" id="header">
+            <div class="col">
+                <span>Registration</span>
+            </div>
+        </div>
+        <div class="row" id="content">
+            <div class="col"></div>
+            <div class="col-8" id="form">
+            <form >
+                <div class="form-group">
+                    <label for="firstname">Firstname</label>
+                    <input type="text" class="form-control" id="firstname">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">Lastname</label>
+                    <input type="text" class="form-control" id="lastname">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirm-pass">Confirm password</label>
+                    <input type="password" class="form-control" id="confirm-pass">
+                </div>
+                <button type="submit" class="btn btn-dark">Register</button>
+                <span id="error"></span>
+            </form>
+            </div>
+            <div class="col"></div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script src="js/add-user.js"></script>
+</html>
