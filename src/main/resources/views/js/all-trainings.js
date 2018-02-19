@@ -2,6 +2,14 @@ API_URL = "http://localhost:8080/";
 
 $(document).ready(function () {
 
+    $.ajax({
+        url: API_URL + "login/check-admin"
+    }).done(function(object) {
+        if(object === '') {
+            window.location.replace(API_URL);
+        }
+    });
+
     function getAll(page) {
         $.ajax({
             url: API_URL + "training/all/"+page

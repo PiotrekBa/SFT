@@ -4,12 +4,15 @@ $(document).ready(function () {
 
     function getAllAtTheWeek() {
         $.ajax({
-            url: API_URL + "training/user"
+            url: API_URL + "/training/user"
         }).done(function(object) {
-            show(object);
-            console.log(object)
-            header(object);
-            signLink();
+            if (object === '') {
+                window.location.replace(API_URL);
+            } else {
+                show(object);
+                header(object);
+                signLink();
+            }
         })
     }
 
@@ -36,7 +39,7 @@ $(document).ready(function () {
         if(sign === true) {
             return '<a href="" class="sign">Sign off</a>';
         }
-        return '<a href="" class="sign">Sign in</a>';
+        return '<a href="" class="sign">Sign up</a>';
     }
 
     function getDate(date) {
@@ -69,7 +72,7 @@ $(document).ready(function () {
             var aText = $(e.target).text();
             var vac = $(e.target).parent().prev().text();
 
-            if(aText === 'Sign in' & vac ==='0') {
+            if(aText === 'Sign up' & vac ==='0') {
                 alert('No vacancies at this training');
             }
 
@@ -79,6 +82,7 @@ $(document).ready(function () {
             });
 
             var myInit = {
+                credentials: 'include',
                 method: 'PUT',
                 headers: myHeaders,
                 cache: 'default'

@@ -1,13 +1,17 @@
 package pl.piotrbartoszak.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.piotrbartoszak.entity.Training;
 import pl.piotrbartoszak.entity.User;
 import pl.piotrbartoszak.model.*;
 import pl.piotrbartoszak.repository.TrainingRepository;
 import pl.piotrbartoszak.repository.UserRepository;
+import pl.piotrbartoszak.service.LoginService;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,11 +49,15 @@ public class TrainingController {
     }
 
     @GetMapping("/week")
-    public TrainingToView allWeekTrainings(){
-        LocalDate startDate = LocalDate.now();
-        LocalDate finishDate = startDate.plusDays(7);
-        List<Training> training = trainingRepository.findTrainingsAtTheWeek(startDate,finishDate);
-        return TrainingToView.fromTrainingList(training,startDate,finishDate);
+    public TrainingToView allWeekTrainings(@SessionAttribute("user") String u) {
+        String[] userSession = LoginService.sessionUser(u);
+        if (userSession[0].equals("admin")) {
+            LocalDate startDate = LocalDate.now();
+            LocalDate finishDate = startDate.plusDays(7);
+            List<Training> training = trainingRepository.findTrainingsAtTheWeek(startDate, finishDate);
+            return TrainingToView.fromTrainingList(training, startDate, finishDate);
+        }
+        return null;
     }
 
     @PostMapping("")
@@ -58,33 +66,59 @@ public class TrainingController {
         trainingRepository.save(training);
     }
 
-    @GetMapping("/user")
-    public TrainingToViewForUser allUserTraining() {
-        User user = userRepository.findOne(2L);
-        LocalDate startDate = LocalDate.now();
-        LocalDate finishDate = startDate.plusDays(7);
-        List<Training> trainings = trainingRepository
-                .findTrainingsAtTheWeek(startDate,finishDate);
-        List<TrainingForUser> trainingForUsers = new ArrayList<>();
-        for (Training t : trainings) {
-            trainingForUsers.add(TrainingForUser.forUserfromTraining(t, user));
+    @GetMapping("/checkUser")
+    public void checkUser(HttpServletResponse response,
+                          @SessionAttribute("user") String user) throws IOException {
+        String[] userSession = LoginService.sessionUser(user);
+        if (userSession[0].equals("user")) {
+            response.sendRedirect("/user");
         }
-        TrainingToViewForUser trainingToViewForUser = new TrainingToViewForUser();
-        trainingToViewForUser.setStartDate(startDate);
-        trainingToViewForUser.setFinishDate(finishDate);
-        trainingToViewForUser.setTrainings(trainingForUsers);
-        return trainingToViewForUser;
+        response.sendRedirect("/home");
+        return;
+    }
+
+    @GetMapping("/user")
+    public TrainingToViewForUser allUserTraining(
+            @SessionAttribute("user") String u) throws IOException {
+
+        String[] userSession = LoginService.sessionUser(u);
+
+        if (userSession[0].equals("user")) {
+            Long id = Long.parseLong(userSession[1]);
+            User user = userRepository.findOne(id);
+            System.out.println(user);
+            LocalDate startDate = LocalDate.now();
+            LocalDate finishDate = startDate.plusDays(7);
+            List<Training> trainings = trainingRepository
+                    .findTrainingsAtTheWeek(startDate, finishDate);
+            List<TrainingForUser> trainingForUsers = new ArrayList<>();
+            for (Training t : trainings) {
+                trainingForUsers.add(TrainingForUser.forUserfromTraining(t, user));
+            }
+            TrainingToViewForUser trainingToViewForUser = new TrainingToViewForUser();
+            trainingToViewForUser.setStartDate(startDate);
+            trainingToViewForUser.setFinishDate(finishDate);
+            trainingToViewForUser.setTrainings(trainingForUsers);
+            return trainingToViewForUser;
+        }
+        return null;
     }
 
     @PutMapping("/user/{id}")
-    public String signToTraining(@PathVariable long id) {
-        User user = userRepository.findOne(2L);
+    public String signToTraining(@PathVariable long id,
+                                 @SessionAttribute("user") String u) {
+
+        String[] userSession = LoginService.sessionUser(u);
+
+        System.out.println(u);
+        Long userId = Long.parseLong(userSession[1]);
+        User user = userRepository.findOne(userId);
         Training training = trainingRepository.findOne(id);
         List<User> users = training.getUsers();
         User userToDel = null;
-        for(User u : users) {
-            if (u.getId() == user.getId()) {
-                userToDel = u;
+        for(User us : users) {
+            if (us.getId() == user.getId()) {
+                userToDel = us;
             }
         }
         if (userToDel != null) {

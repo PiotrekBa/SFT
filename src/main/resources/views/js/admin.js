@@ -6,9 +6,12 @@ $(document).ready(function () {
         $.ajax({
             url: API_URL + "training/week"
         }).done(function(object) {
-            console.log(object);
-            show(object);
-            header(object);
+            if(object === '') {
+                window.location.replace(API_URL);
+            } else {
+                show(object);
+                header(object);
+            }
         })
     }
 

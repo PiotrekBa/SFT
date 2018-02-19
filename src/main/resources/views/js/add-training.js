@@ -1,6 +1,14 @@
-var API_URL = 'http://localhost:8080/training';
+var API_URL = 'http://localhost:8080/';
 
 $(document).ready(function(){
+
+    $.ajax({
+        url: API_URL + "login/check-admin"
+    }).done(function(object) {
+        if(object === '') {
+            window.location.replace(API_URL);
+        }
+    })
 
 
     var button = $('button');
@@ -31,13 +39,14 @@ $(document).ready(function(){
         });
 
         var myInit = {
+            credentials: 'include',
             method: 'POST',
             headers: myHeaders,
             cache: 'default',
             body: JSON.stringify(objToSave)
         };
 
-        fetch(API_URL, myInit).then(function (response) {
+        fetch(API_URL+"training", myInit).then(function (response) {
             console.log(response)
         });
 

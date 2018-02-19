@@ -8,6 +8,7 @@ import pl.piotrbartoszak.entity.User;
 import pl.piotrbartoszak.model.Login;
 import pl.piotrbartoszak.repository.AdminRepository;
 import pl.piotrbartoszak.repository.UserRepository;
+import pl.piotrbartoszak.service.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/login")
+@SessionAttributes("user")
 public class LoginController {
 
     @Autowired
@@ -27,22 +29,37 @@ public class LoginController {
     @PostMapping("/check")
     public void checkLogin(@RequestBody Login login,
                            HttpServletResponse response,
-                           HttpSession session) throws IOException {
+                           Model model) throws IOException {
         Admin admin = adminRepository.findByEmail(login.getEmail());
         if (admin != null) {
             if (admin.getPassword().equals(login.getPassword())){
-                session.setAttribute("user", "admin;"+admin.getId());
+                model.addAttribute("user", "admin;"+admin.getId());
             }
         } else {
             User user = userRepository.findByEmail(login.getEmail());
             if (user != null) {
                 if(user.getPassword().equals(login.getPassword())) {
-                    session.setAttribute("user", "user;"+user.getId());
+                    model.addAttribute("user", "user;"+ user.getId());
                 }
             }
         }
-        session.setMaxInactiveInterval(3600);
-        System.out.println(session.getAttribute("user"));
         response.sendRedirect("/home");
+    }
+
+    @PostMapping("/logout")
+    public void logout(HttpServletResponse response,
+                       Model model) throws IOException {
+        model.addAttribute("user", "");
+        response.sendRedirect("/home");
+    }
+
+    @GetMapping("/check-admin")
+    public String checkAdmin(@SessionAttribute("user") String u,
+                           HttpServletResponse response) throws IOException {
+        String[] userSession = LoginService.sessionUser(u);
+        if (!userSession[0].equals("admin")) {
+            return "";
+        }
+        return "good";
     }
 }

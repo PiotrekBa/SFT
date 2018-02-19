@@ -37,6 +37,7 @@ $(document).ready(function () {
             });
 
             var myInit = {
+                credentials: 'include',
                 method: 'POST',
                 headers: myHeaders,
                 cache: 'default',
